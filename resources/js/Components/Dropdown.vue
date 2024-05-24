@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue';
+import {computed, onMounted, onUnmounted, ref} from 'vue';
 
 const props = defineProps({
     align: {
@@ -33,9 +33,9 @@ const widthClass = computed(() => {
 
 const alignmentClasses = computed(() => {
     if (props.align === 'left') {
-        return 'ltr:origin-top-left rtl:origin-top-right start-0';
+        return 'origin-top-left left-0';
     } else if (props.align === 'right') {
-        return 'ltr:origin-top-right rtl:origin-top-left end-0';
+        return 'origin-top-right right-0';
     } else {
         return 'origin-top';
     }
@@ -47,7 +47,7 @@ const open = ref(false);
 <template>
     <div class="relative">
         <div @click="open = !open">
-            <slot name="trigger" />
+            <slot name="trigger"/>
         </div>
 
         <!-- Full Screen Dropdown Overlay -->
@@ -69,7 +69,7 @@ const open = ref(false);
                 @click="open = false"
             >
                 <div class="rounded-md ring-1 ring-black ring-opacity-5" :class="contentClasses">
-                    <slot name="content" />
+                    <slot name="content"/>
                 </div>
             </div>
         </Transition>

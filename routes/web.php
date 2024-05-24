@@ -1,27 +1,50 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+    return redirect(route('dashboard'));
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::group(['prefix' => "dashboard", "middleware" => 'auth'], function () {
+    Route::get('/', function () {
+        return Inertia::render('Dashboard');
+    })->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/users', function () {
+        return Inertia::render('Users/Main');
+    })->name('users');
+
+    Route::get('/contacts', function () {
+        return Inertia::render('Contacts/Main');
+    })->name('contacts');
+
+    Route::get('/relation_category', function () {
+        return Inertia::render('RelationCategory/Main');
+    })->name('relation_category');
+
+    Route::get('/relations', function () {
+        return Inertia::render('Relations/Main');
+    })->name('relations');
+
+    Route::get('/product_category', function () {
+        return Inertia::render('ProductCategory/Main');
+    })->name('product_category');
+
+    Route::get('/products', function () {
+        return Inertia::render('Products/Main');
+    })->name('products');
+
+    Route::get('/product_serials', function () {
+        return Inertia::render('ProductSerial/Main');
+    })->name('product_serials');
+
 });
 
-require __DIR__.'/auth.php';
+Route::get('public_path' , function () {
+   return public_path();
+});
+
+require __DIR__ . '/auth.php';

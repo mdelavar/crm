@@ -1,0 +1,76 @@
+.toastify {
+  @apply shadow-sm;
+  padding: 15px 20px 15px 50px;
+  color: #ffffff;
+  display: inline-block;
+  position: fixed;
+  opacity: 0;
+  transition: all 0.4s ease-in-out;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  min-width: 250px;
+  max-width: 350px;
+  z-index: 2147483647;
+}
+
+.toastify.on {
+  opacity: 1;
+}
+
+.toast-close {
+  opacity: 0.4;
+  padding: 0;
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translate(0, -50%);
+  line-height: 8px;
+}
+
+.toastify-right {
+  right: 15px;
+}
+
+.toastify-left {
+  left: 15px;
+}
+
+.toastify-top {
+  top: -150px;
+}
+
+.toastify-bottom {
+  bottom: -150px;
+}
+
+.toastify-rounded {
+  border-radius: 25px;
+}
+
+.toastify-avatar {
+  width: 1.5em;
+  height: 1.5em;
+  margin: -7px 5px;
+  border-radius: 2px;
+}
+
+.toastify-center {
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  max-width: fit-content;
+  max-width: -moz-fit-content;
+}
+
+@media only screen and (max-width: 360px) {
+  .toastify-right,
+  .toastify-left {
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    max-width: fit-content;
+  }
+}

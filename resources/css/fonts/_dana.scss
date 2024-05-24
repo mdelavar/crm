@@ -1,0 +1,10 @@
+@font-face {
+  font-family: dana;
+  src: url("/public/fonts/dana/dana-fanum-medium.eot"); /* IE9 Compat Modes */
+  src: url("/public/fonts/dana/dana-fanum-medium.eot")
+      format("embedded-opentype"),
+      url("/public/fonts/dana/dana-fanum-medium.woff2")
+      format("woff2"),
+      url("/public/fonts/dana/dana-fanum-medium.woff")
+      format("woff"); /* Pretty Modern Browsers */
+}

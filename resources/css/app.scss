@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "mixins";
+@import "tippy.js/dist/tippy";
+@import "tippy.js/themes/light";
+@import "tippy.js/dist/svg-arrow";
+@import "tippy.js/animations/shift-away";
+@import "toastify";
+@import "pagination";
+@import "litepicker";
+@import "tail.select/css/default/tail.select-light";
+
+@import "fonts/dana";
+
+body, html, #app {
+    @apply min-h-screen;
+    direction: rtl;
+}
+
+label.required {
+    display: flex;
+    align-items: center;
+}
+
+label.required::after {
+    content: "*";
+    font-size: 18px;
+    width: 10px;
+    height: 10px;
+    line-height: 15px;
+    @apply mx-1 text-red-700;
+}
+
+.tail-select {
+    @apply w-full m-0;
+    line-height: 1.875rem !important;
+
+
+    .select-label {
+        height: 42px;
+        @apply px-3 text-gray-700 border border-gray-700 shadow shadow-gray-300 ;
+    }
+
+    .select-label {
+        &:after {
+            top: 0 !important;
+            bottom: 0 !important;
+            right: unset !important;
+            left: 12px;
+            margin: auto 0 !important;
+        }
+    }
+
+    .search-input,
+    .dropdown-option,
+    .label-inner {
+        text-align: right !important;
+    }
+
+    .select-dropdown {
+        ul {
+            li {
+                padding: 10px 10px 10px 35px;
+            }
+        }
+    }
+}
