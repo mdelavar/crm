@@ -7,6 +7,10 @@ Route::get('/', function () {
     return redirect(route('dashboard'));
 });
 
+Route::get('/o-panel', function () {
+    return Inertia::render('OrganizationPanel/Main');
+})->name('organizationPanel');
+
 Route::group(['prefix' => "dashboard", "middleware" => 'auth'], function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard');
@@ -49,6 +53,13 @@ Route::group(['prefix' => "dashboard", "middleware" => 'auth'], function () {
         return Inertia::render('Box/Main');
     })->name('boxes');
 
+    Route::get('/organizations', function () {
+        return Inertia::render('Organization/Main');
+    })->name('organizations');
+
+    Route::get('/car_services', function () {
+        return Inertia::render('CarService/Main');
+    })->name('car_services');
 });
 
 Route::get('public_path' , function () {

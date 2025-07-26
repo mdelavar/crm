@@ -3,7 +3,6 @@ import {computed, ref} from 'vue';
 import ApplicationLogo from '@/Components/ApplicationLogo.vue';
 import NavLink from '@/Components/NavLink.vue';
 import {Link} from '@inertiajs/vue3';
-import Card from "@/Components/Card.vue";
 
 const showingNavigationDropdown = ref(false);
 
@@ -69,6 +68,14 @@ const props = defineProps({
                     <NavLink v-if="hasPermission('box_view')" :href="route('boxes')" :active="routeName === 'boxes'"
                              icon="folder">
                         کارتن ها
+                    </NavLink>
+                    <NavLink v-if="hasPermission('organization_view')" :href="route('organizations')" :active="routeName === 'organizations'"
+                             icon="target">
+                        سازمان ها
+                    </NavLink>
+                    <NavLink v-if="hasPermission('car_service_view')" :href="route('car_services')" :active="routeName === 'car_services'"
+                             icon="tool">
+                        اتوسرویس ها
                     </NavLink>
                     <NavLink v-if="hasPermission('users_view')" :href="route('users')" :active="routeName === 'users'"
                              icon="lock">مدیریت
