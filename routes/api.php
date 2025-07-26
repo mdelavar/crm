@@ -10,6 +10,8 @@ use \App\Http\Controllers\RelationController;
 use \App\Http\Controllers\PermissionController;
 use \App\Http\Controllers\ProductController;
 use \App\Http\Controllers\ProductSerialNumberController;
+use \App\Http\Controllers\RepresentationController;
+use \App\Http\Controllers\BoxController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -22,7 +24,10 @@ Route::apiResource('relations', RelationController::class)->middleware(['web', '
 Route::apiResource('product_categories', ProductCategoryController::class)->middleware(['web', 'auth']);
 Route::apiResource('products', ProductController::class)->middleware(['web', 'auth']);
 Route::apiResource('product_serial_numbers', ProductSerialNumberController::class)->middleware(['web', 'auth']);
-Route::post('product_serial_numbers_between', [ProductSerialNumberController::class, "between"])->middleware(['web', 'auth']);
+Route::apiResource('representations', RepresentationController::class)->middleware(['web', 'auth']);
+Route::apiResource('boxes', BoxController::class)->middleware(['web', 'auth']);
+
+Route::post('product_serial_numbers_between', [ProductSerialNumberController::class, "autoBarcode"])->middleware(['web', 'auth']);
 
 Route::get('/user-permissions/{user}', [PermissionController::class, 'userPermissions'])->middleware(['web', 'auth']);;
 Route::post('/user-permissions/{user}', [PermissionController::class, 'updateUserPermissions'])->middleware(['web', 'auth']);;

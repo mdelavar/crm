@@ -2,34 +2,17 @@
     <Card class="p-4 mb-5">
         <div class="ml-auto flex gap-2 items-center">
             <input
-                v-model="filter.customer_serial"
-                placeholder="سریال مشتری"
+                v-model="filter.name"
+                placeholder="نام"
                 @keyup.enter="doFilter"
                 class=" shadow mx-2 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 type="text">
-            <div class="flex-1">
-                <TailSelect
-                    v-model="filter.product_id"
-                    :options="{
-                            search: true,
-                            searchFocus: true,
-                            sourceBind: true,
-                            placeholder: 'محصول',
-                          }"
-
-                >
-                    <option></option>
-                    <option
-                        v-for="(item , index) in products"
-                        :key="index"
-                        :value="item.id"
-                        class="text-center"
-                        :selected="filter.product_id === item.id"
-                    >
-                        {{ item.name }}
-                    </option>
-                </TailSelect>
-            </div>
+            <input
+                v-model="filter.phone"
+                @keyup.enter="doFilter"
+                placeholder="شماره همراه"
+                class=" shadow mx-2 appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                type="text">
             <PrimaryButton @click="doFilter()"
             >جستجو
             </PrimaryButton>
@@ -50,7 +33,7 @@ export default defineComponent({
     name: "Filter",
     emits: ['search-items'],
     props: {
-        products: {
+        categories: {
             type: Object,
             default: null,
         }
@@ -63,8 +46,8 @@ export default defineComponent({
     data() {
         return {
             filter: {
-                customer_serial: '',
-                product_id: null,
+                name: '',
+                phone: '',
             },
         };
     },
@@ -73,8 +56,8 @@ export default defineComponent({
     },
     methods: {
         clearFilter() {
-            this.filter.customer_serial = '';
-            this.filter.product_id = null;
+            this.filter.name = '';
+            this.filter.phone = '';
 
             this.$emit("search-items", this.filter);
         },

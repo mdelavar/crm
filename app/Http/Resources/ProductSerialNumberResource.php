@@ -18,7 +18,10 @@ class ProductSerialNumberResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'serial' => $this->serial,
+            'customer_serial' => $this->customer_serial,
+            'representation_serial' => $this->representation_serial,
+            'box' => $this->box,
+            'box_id' => $this->box_id,
             'description' => $this->description,
             'product_id' => $this->product_id,
             'pr' => $this->product,

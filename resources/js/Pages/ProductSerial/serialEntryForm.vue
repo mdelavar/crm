@@ -11,7 +11,7 @@
 
         <form>
             <div class="grid grid-cols-4 gap-4">
-                <div class="col-span-4 text-center">
+                <div class="col-span-2 text-center">
                     <label class="required block text-gray-700 text-sm mb-2  text-right">
                         محصول
                     </label>
@@ -38,24 +38,38 @@
                 </div>
                 <div class="col-span-2">
                     <label class="required block text-gray-700 text-sm  mb-2" for="username">
-                        از سریال
+                        تعداد
                     </label>
-                    <input v-model="form.from_serial"
+                    <input v-model="form.count"
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                            type="text">
 
                 </div>
-
-                <div class="col-span-2">
-                    <label class="required block text-gray-700 text-sm  mb-2" for="username">
-                        تا سریال
+                <div class="col-span-4 text-center">
+                    <label class="required block text-gray-700 text-sm mb-2  text-right">
+                        بارکد کارتن
                     </label>
-                    <input v-model="form.to_serial"
-                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                           type="text">
+                    <TailSelect
+                        v-model="form.box_id"
+                        :options="{
+                            search: true,
+                            searchFocus: true,
+                            sourceBind: true,
+                          }"
 
+                    >
+                        <option>-</option>
+                        <option
+                            v-for="(item , index) in boxes"
+                            :key="index"
+                            :value="item.id"
+                            class="text-center"
+                            :selected="form.box_id === item.id"
+                        >
+                            {{ item.barcode }}
+                        </option>
+                    </TailSelect>
                 </div>
-
                 <div class="col-span-2">
                     <label class="required block text-gray-700 text-sm mb-2" for="username">تاریخ تولید</label>
                     <VuePersianDatetimePicker
@@ -122,6 +136,10 @@ export default defineComponent({
             type: Array,
             default: []
         },
+        boxes: {
+            type: Array,
+            default: []
+        },
     },
     computed: {
     },
@@ -130,8 +148,7 @@ export default defineComponent({
             btn_allow: true,
             form: {
                 id: null,
-                from_serial: null,
-                to_serial: null,
+                count: null,
                 product_id: null,
                 description: null,
                 ex_date: null,
@@ -153,8 +170,7 @@ export default defineComponent({
                         this.$emit('reload', 1, submit_new);
                         if (submit_new) {
                             this.form.id = null;
-                            this.form.from_serial = '';
-                            this.form.to_serial = '';
+                            this.form.count = '';
                             this.form.product_id = null;
                             this.form.description = null;
                             this.form.ma_date = null;

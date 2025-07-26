@@ -2,26 +2,32 @@
 
 namespace App\Providers;
 
+use App\Contracts\BoxRepository;
 use App\Contracts\ContactRepository;
 use App\Contracts\ProductCategoryRepository;
 use App\Contracts\ProductRepository;
 use App\Contracts\ProductSerialNumberRepository;
 use App\Contracts\RelationCategoryRepository;
 use App\Contracts\RelationRepository;
+use App\Contracts\RepresentationRepository;
 use App\Contracts\UserRepository;
+use App\Models\Box;
 use App\Models\Contact;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductSerialNumber;
 use App\Models\Relation;
 use App\Models\RelationCategory;
+use App\Models\Representation;
 use App\Models\User;
+use App\Repositories\EloquentBoxRepository;
 use App\Repositories\EloquentContactRepository;
 use App\Repositories\EloquentProductCategoryRepository;
 use App\Repositories\EloquentProductRepository;
 use App\Repositories\EloquentProductSerialNumberRepository;
 use App\Repositories\EloquentRelationCategoryRepository;
 use App\Repositories\EloquentRelationRepository;
+use App\Repositories\EloquentRepresentationRepository;
 use App\Repositories\EloquentUserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -61,6 +67,12 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(ProductSerialNumberRepository::class, function () {
             return new EloquentProductSerialNumberRepository(new ProductSerialNumber());
         });
+        $this->app->singleton(RepresentationRepository::class, function () {
+            return new EloquentRepresentationRepository(new Representation());
+        });
+        $this->app->singleton(BoxRepository::class, function () {
+            return new EloquentBoxRepository(new Box());
+        });
 
     }
 
@@ -79,6 +91,8 @@ class RepositoryServiceProvider extends ServiceProvider
             ProductCategoryRepository::class,
             ProductRepository::class,
             ProductSerialNumberRepository::class,
+            RepresentationRepository ::class,
+            BoxRepository ::class,
         ];
     }
 }

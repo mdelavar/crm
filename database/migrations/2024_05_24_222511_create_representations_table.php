@@ -11,15 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('product_serial_numbers', function (Blueprint $table) {
+        Schema::create('representations', function (Blueprint $table) {
             $table->id();
-            $table->string('serial');
-            $table->foreignId("product_id")->constrained('products');
-            $table->date("ma_date");
-            $table->date("ex_date");
-            $table->text("description")->nullable();
+            $table->string("name");
+            $table->string("phone");
+            $table->text("address");
 
-            // History Fields
             $table->foreignId('created_by')
                 ->nullable()
                 ->constrained('users');
@@ -36,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('product_serial_numbers');
+        Schema::dropIfExists('representations');
     }
 };

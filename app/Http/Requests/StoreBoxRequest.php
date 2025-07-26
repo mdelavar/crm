@@ -3,9 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class StoreProductSerialNumberBetweenRequest extends FormRequest
+class StoreBoxRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +22,8 @@ class StoreProductSerialNumberBetweenRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'nullable',
-            'count' => 'required|integer',
-            'product_id' => 'required',
-            'box_id' => 'required',
-            'ma_date' => 'required|date',
-            'ex_date' => 'required|date|after:ma_date',
-            'description' => 'nullable'
+            'representation_id' => 'required',
+            'count' => 'integer'
         ];
     }
 }

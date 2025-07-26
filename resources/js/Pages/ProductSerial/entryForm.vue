@@ -11,7 +11,7 @@
 
         <form>
             <div class="grid grid-cols-4 gap-4">
-                <div class="col-span-2 text-center">
+                <div class="col-span-4 text-center">
                     <label class="required block text-gray-700 text-sm mb-2  text-right">
                         محصول
                     </label>
@@ -36,14 +36,48 @@
                         </option>
                     </TailSelect>
                 </div>
-                <div class="col-span-2">
+                <div class="col-span-4">
                     <label class="required block text-gray-700 text-sm  mb-2" for="username">
-                        سریال
+                        سریال مشتری
                     </label>
-                    <input v-model="form.serial"
+                    <input v-model="form.customer_serial"
                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                            type="text">
 
+                </div>
+                <div class="col-span-4">
+                    <label class="required block text-gray-700 text-sm  mb-2" for="username">
+                        سریال اتوسرویس
+                    </label>
+                    <input v-model="form.representation_serial"
+                           class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                           type="text">
+
+                </div>
+                <div class="col-span-4 text-center">
+                    <label class="required block text-gray-700 text-sm mb-2  text-right">
+                        بارکد کارتن
+                    </label>
+                    <TailSelect
+                        v-model="form.box_id"
+                        :options="{
+                            search: true,
+                            searchFocus: true,
+                            sourceBind: true,
+                          }"
+
+                    >
+                        <option>-</option>
+                        <option
+                            v-for="(item , index) in boxes"
+                            :key="index"
+                            :value="item.id"
+                            class="text-center"
+                            :selected="form.box_id === item.id"
+                        >
+                            {{ item.barcode }}
+                        </option>
+                    </TailSelect>
                 </div>
                 <div class="col-span-2">
                     <label class="required block text-gray-700 text-sm mb-2" for="username">تاریخ تولید</label>
@@ -116,6 +150,10 @@ export default defineComponent({
             type: Array,
             default: []
         },
+        boxes: {
+            type: Array,
+            default: []
+        },
     },
     computed: {
     },
@@ -139,16 +177,20 @@ export default defineComponent({
         if (Object.keys(this.edit_items).length > 0) {
             this.is_edit = true;
             this.form.id = this.edit_items.id;
-            this.form.serial = this.edit_items.serial;
+            this.form.customer_serial = this.edit_items.customer_serial;
+            this.form.representation_serial = this.edit_items.representation_serial;
             this.form.product_id = this.edit_items.product_id;
+            this.form.box_id = this.edit_items.box_id;
             this.form.description = this.edit_items.description;
             this.form.ma_date = this.edit_items.ma_date;
             this.form.ex_date = this.edit_items.ex_date;
         } else {
             this.is_edit = false;
             this.form.id = null;
-            this.form.serial = null;
+            this.form.customer_serial = null;
+            this.form.representation_serial = null;
             this.form.product_id = null;
+            this.form.box_id = null;
             this.form.description = null;
             this.form.ma_date = null;
             this.form.ex_date = null;

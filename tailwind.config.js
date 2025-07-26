@@ -16,10 +16,10 @@ export default {
                 sans: ['dana', ...defaultTheme.fontFamily.sans],
             },
             colors : {
-                themePrimary: '#4d5862',
-                themeLightPrimary: '#6e7780',
-                themeOverlyPrimary: 'rgba(77,88,98,0.89)',
-                themeDarkPrimary: '#36495b',
+                themePrimary: '#36495b',
+                themeLightPrimary: '#2a3c4f',
+                themeOverlyPrimary: 'rgba(77,88,98,0.59)',
+                themeDarkPrimary: '#3f4d5d',
                 themeSecondary: '#EE4439',
                 themeGray: '#f1f5f9',
                 themeDarkGray: '#e6ecf2'

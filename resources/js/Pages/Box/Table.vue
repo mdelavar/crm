@@ -1,22 +1,15 @@
 <template>
     <div class="relative intro-y">
         <div class="flex justify-between mb-3 items-center">
-            <span class="text-2xl">فهرست سریال محصولات</span>
-            <div class="flex items-center">
-                <PrimaryButton v-if="hasPermission('product_serial_create')" class="mx-2" @click="clearForm">
-                    <vue-feather class="ml-2" size="20" type="plus"/>
-                    افزودن سریال محصول جدید
-                </PrimaryButton>
-                <PrimaryButton v-if="hasPermission('product_serial_create')"  @click="clearForm2">
-                    <vue-feather class="ml-2" size="20" type="plus"/>
-                    تولید سریال محصولات
-                </PrimaryButton>
-            </div>
-
+            <span class="text-2xl">فهرست کارتن ها</span>
+            <PrimaryButton v-if="hasPermission('box_create')" @click="clearForm">
+                <vue-feather class="ml-2" size="20" type="plus"/>
+                افزودن کارتن جدید
+            </PrimaryButton>
         </div>
-        <Filter @search-items="searchFilters" :products="products"></Filter>
+        <Filter @search-items="searchFilters"></Filter>
         <div class="overflow-hidden border border-themeOverlyPrimary md:rounded-lg">
-            <div v-if="product_serial_numbers.isLoading" class="flex justify-center mx-auto p-5">
+            <div v-if="boxes.isLoading" class="flex justify-center mx-auto p-5">
                 <LoadingIcon
                     icon="three-dots"
                     color="#000"
@@ -28,33 +21,12 @@
                 <tr>
                     <th scope="col"
                         class="border border-themeOverlyPrimary py-3.5 px-4 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                        نام
+                        شماره سریال
                     </th>
                     <th scope="col"
                         class="border border-themeOverlyPrimary py-3.5 px-4 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                        تاریخ تولید
+                       نمایندگی
                     </th>
-                    <th scope="col"
-                        class="border border-themeOverlyPrimary py-3.5 px-4 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                        تاریخ انقضاء
-                    </th>
-                    <th scope="col"
-                        class="border border-themeOverlyPrimary py-3.5 px-4 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                        سریال مشتری
-                    </th>
-                    <th scope="col"
-                        class="border border-themeOverlyPrimary py-3.5 px-4 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                        سریال اتوسرویس
-                    </th>
-                    <th scope="col"
-                        class="border border-themeOverlyPrimary py-3.5 px-4 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                        سریال جعبه
-                    </th>
-                    <th scope="col"
-                        class="border border-themeOverlyPrimary py-3.5 px-4 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                       توضیحات
-                    </th>
-
                     <th scope="col" class="border border-themeOverlyPrimary px-4 py-3.5 text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
                         <span>عملیات</span>
                     </th>
@@ -63,17 +35,12 @@
 
 
                 <tbody class="bg-white divide-y divide-indigo-200">
-                <tr v-for="(item, index) in product_serial_numbers.data" class="even:bg-gray-50">
-                    <td class="p-2 border">{{ item.pr.name }}</td>
-                    <td class="p-2 border">{{ item.ma_date_label }}</td>
-                    <td class="p-2 border">{{ item.ex_date_label }}</td>
-                    <td class="p-2 border text-xs">{{ item.customer_serial }}</td>
-                    <td class="p-2 border text-xs">{{ item.representation_serial }}</td>
-                    <td class="p-2 border text-xs">{{ item.box.barcode }}</td>
-                    <td class="p-2 border">{{ item.description }}</td>
+                <tr v-for="(item, index) in boxes.data" class="even:bg-gray-50">
+                    <td class="p-2 border">{{ item.barcode }}</td>
+                    <td class="p-2 border">{{ item.representation.name }}</td>
                     <td class="p-2 border">
                         <div class="flex items-center justify-center">
-                            <div v-if="hasPermission('product_serial_edit')" class="mx-1">
+                            <div v-if="hasPermission('box_edit')" class="mx-1">
                                 <a
                                     class="cursor-pointer"
                                     @click="updateForm(item)"
@@ -92,7 +59,7 @@
         <Pagination
             v-if="hasPagination"
             class="intro-y box mt-3"
-            :class="product_serial_numbers.data.length"
+            :class="boxes.data.length"
             :paginate="paginate"
             :counter="paginate.meta.per_page"
             :pass-page-number="true"
@@ -101,11 +68,7 @@
     </div>
 
     <Modal @close="showModal = false" :show="showModal" max-width="2xl" :closeable="false">
-        <EntryForm @close="showModal = false" @reload="reload" :edit_items="edit_items" :boxes="boxes" :products="products"/>
-    </Modal>
-
-    <Modal @close="showSerialModal = false" :show="showSerialModal" max-width="2xl" :closeable="false">
-        <SerialEntryForm @close="showSerialModal = false" @reload="reload" :products="products" :boxes="boxes"/>
+        <EntryForm @close="showModal = false" @reload="reload" :edit_items="edit_items" :representations="representations"/>
     </Modal>
 
 </template>
@@ -115,7 +78,6 @@ import {defineComponent} from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import Modal from "@/Components/Modal.vue";
 import EntryForm from "./entryForm.vue";
-import SerialEntryForm from "./serialEntryForm.vue";
 import LoadingIcon from "@/Components/loading-icon/Main.vue";
 import Pagination from "@/Components/pagination/Main.vue";
 import Filter from "./filter.vue";
@@ -123,19 +85,17 @@ import DefLogo from "@/Images/avatar.jpg";
 
 
 export default defineComponent({
-    components: {Filter, Pagination, LoadingIcon, EntryForm,SerialEntryForm , Modal, PrimaryButton},
+    components: {Filter, Pagination, LoadingIcon, EntryForm, Modal, PrimaryButton},
     props: {},
 
     data() {
         return {
             edit_items: {},
             showModal: false,
-            showSerialModal: false,
-            product_serial_numbers: {
+            boxes: {
                 isLoading: false, data: {},
             },
-            products: [],
-            boxes: [],
+            representations : [],
             paginate: {
                 links: [],
                 meta: [],
@@ -156,9 +116,9 @@ export default defineComponent({
             e.target.src = DefLogo
         },
         searchFilters(filter) {
-            this.product_serial_numbers.isLoading = true;
+            this.boxes.isLoading = true;
             this.axios
-                .get(`/product_serial_numbers`, {
+                .get(`/boxes`, {
                     params: {
                         filter,
                         page: 1,
@@ -166,12 +126,12 @@ export default defineComponent({
                     }
                 })
                 .then(({data}) => {
-                    this.product_serial_numbers.isLoading = false;
-                    this.product_serial_numbers.data = data.data
+                    this.boxes.isLoading = false;
+                    this.boxes.data = data.data;
+                    this.representations = data.representations;
                     this.paginate.links = data.links;
                     this.paginate.meta = data.meta;
-                    this.products = data.products;
-                    this.boxes = data.boxes;
+                    this.categories = data.categories;
                 })
                 .finally(() => {
                 });
@@ -180,37 +140,32 @@ export default defineComponent({
             this.edit_items = {};
             this.showModal = true;
         },
-        clearForm2() {
-            this.showSerialModal = true;
-        },
         updateForm(item) {
             this.showModal = true;
             this.edit_items = item;
         },
         reload(page = 1, submit_new) {
-            this.product_serial_numbers.isLoading = true;
+            this.boxes.isLoading = true;
             this.axios
-                .get(`/product_serial_numbers`, {
+                .get(`/boxes`, {
                     params: {
                         page,
                         limit: 25,
                     }
                 })
                 .then(({data}) => {
-                    this.product_serial_numbers.isLoading = false;
-                    this.product_serial_numbers.data = data.data
+                    this.boxes.isLoading = false;
+                    this.boxes.data = data.data
+                    this.representations = data.representations;
                     this.paginate.links = data.links;
                     this.paginate.meta = data.meta;
-                    this.products = data.products;
-                    this.boxes = data.boxes;
+                    this.categories = data.categories;
                 })
                 .finally(() => {
                     this.btn_allow = true;
                 });
-            if (!submit_new) {
+            if (!submit_new && this.showModal) {
                 this.showModal = false;
-                this.showSerialModal = false;
-
             }
         },
     },

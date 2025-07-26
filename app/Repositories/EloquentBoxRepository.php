@@ -2,27 +2,21 @@
 
 namespace App\Repositories;
 
-use App\Contracts\ProductRepository;
-use App\Contracts\ProductSerialNumberRepository;
+use App\Contracts\BoxRepository;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class EloquentProductSerialNumberRepository extends EloquentRepository implements ProductSerialNumberRepository
+class EloquentBoxRepository extends EloquentRepository implements BoxRepository
 {
-    private string $defaultSort = '-id';
+    private string $defaultSort = 'id';
 
     private array $defaultSelect = [
         'id',
-        'customer_serial',
-        'representation_serial',
-        'box_id',
-        'description',
-        'product_id',
-        'ma_date',
-        'ex_date',
+        'barcode',
+        'representation_id',
         'created_at',
         'updated_at',
         'created_by',
@@ -30,6 +24,7 @@ class EloquentProductSerialNumberRepository extends EloquentRepository implement
     ];
 
     private array $allowedFilters = [
+        'barcode',
     ];
 
     private array $allowedSorts = [];
@@ -42,8 +37,7 @@ class EloquentProductSerialNumberRepository extends EloquentRepository implement
      */
     public function __construct(Model $model)
     {
-        $this->allowedFilters[] = AllowedFilter::exact('product_id');
-        $this->allowedFilters[] = AllowedFilter::exact('customer_serial');
+        $this->allowedFilters[] = AllowedFilter::exact('representation_id');
         parent::__construct($model);
     }
 

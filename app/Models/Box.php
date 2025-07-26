@@ -7,17 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 
-class ProductSerialNumber extends Model
+class Box extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_serial',
-        'representation_serial',
-        'description',
-        'product_id',
-        'box_id',
-        'ma_date',
-        'ex_date'];
+    protected $fillable = ['barcode',
+        'representation_id'];
 
     protected static function boot(): void
     {
@@ -31,14 +26,8 @@ class ProductSerialNumber extends Model
         });
     }
 
-    public function product(): BelongsTo
+    public function representation(): BelongsTo
     {
-        return $this->belongsTo(Product::class, 'product_id');
+        return $this->belongsTo(Representation::class , 'representation_id');
     }
-
-    public function box(): BelongsTo
-    {
-        return $this->belongsTo(Box::class, 'box_id');
-    }
-
 }

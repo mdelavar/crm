@@ -41,6 +41,14 @@ Route::group(['prefix' => "dashboard", "middleware" => 'auth'], function () {
         return Inertia::render('ProductSerial/Main');
     })->name('product_serials');
 
+    Route::get('/representations', function () {
+        return Inertia::render('Representations/Main');
+    })->name('representations');
+
+    Route::get('/boxes', function () {
+        return Inertia::render('Box/Main');
+    })->name('boxes');
+
 });
 
 Route::get('public_path' , function () {

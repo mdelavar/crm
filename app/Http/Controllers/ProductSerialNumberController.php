@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\BoxRepository;
 use App\Contracts\ProductRepository;
 use App\Contracts\ProductSerialNumberRepository;
 use App\Http\Requests\StoreProductSerialNumberBetweenRequest;
@@ -9,13 +10,15 @@ use App\Http\Requests\StoreProductSerialNumberRequest;
 use App\Http\Resources\ProductSerialNumberCollection;
 use App\Http\Resources\ProductSerialNumberResource;
 use App\Models\ProductSerialNumber;
+use App\Traits\SerialHandler;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class ProductSerialNumberController extends Controller
 {
 
-    public function __construct(private ProductSerialNumberRepository $productSerialNumberRepository, private ProductRepository $productRepository)
+    use SerialHandler;
+    public function __construct(private ProductSerialNumberRepository $productSerialNumberRepository, private ProductRepository $productRepository , private BoxRepository $boxRepository)
     {
         $this->resourceItem = ProductSerialNumberResource::class;
         $this->resourceCollection = ProductSerialNumberCollection::class;
@@ -32,7 +35,8 @@ class ProductSerialNumberController extends Controller
         return Cache::tags($cacheTag)->remember($cacheKey, now()->addHour(), function () {
             $collection = $this->productSerialNumberRepository->findByFilters();
             $products = $this->productRepository->all();
-            return $this->respondWithCollection($collection)->additional(compact('products'));
+            $boxes = $this->boxRepository->all();
+            return $this->respondWithCollection($collection)->additional(compact('products' , 'boxes'));
         });
     }
 
@@ -88,14 +92,15 @@ class ProductSerialNumberController extends Controller
         //
     }
 
-    public function between(StoreProductSerialNumberBetweenRequest $request)
+    public function autoBarcode(StoreProductSerialNumberBetweenRequest $request)
     {
         DB::beginTransaction();
         try {
             $data = $request->validated();
-
-            foreach (range($data['from_serial'] , $data['to_serial']) as $serial) {
-                $data['serial'] = $serial;
+            $count = $data['count'];
+            for ($i = 0; $i < $count; $i++) {
+                $data['customer_serial'] = $this->getCustomerSerial(verta($data['ma_date'])->format('Ymd') , $data['product_id']);
+                $data['representation_serial'] = $this->getRepresentationSerial(verta($data['ma_date'])->format('Ymd') , $data['product_id']);
                 $response = $this->productSerialNumberRepository->store($data);
             }
             DB::commit();
