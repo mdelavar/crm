@@ -1,7 +1,7 @@
 <template>
     <div class="relative intro-y">
-        <div class="flex justify-between mb-3 items-center">
-            <span class="text-2xl">فهرست سریال محصولات</span>
+       <div class="flex justify-between mb-3 items-center md:flex-row flex-col">
+            <span class="text-2xl mb-3 md:mb-0">فهرست سریال محصولات</span>
             <div class="flex items-center">
                 <PrimaryButton v-if="hasPermission('product_serial_create')" class="mx-2" @click="clearForm">
                     <vue-feather class="ml-2" size="20" type="plus"/>
@@ -15,7 +15,7 @@
 
         </div>
         <Filter @search-items="searchFilters" :products="products"></Filter>
-        <div class="overflow-hidden border border-themeOverlyPrimary md:rounded-lg">
+        <div class="overflow-y-auto border border-themeOverlyPrimary md:rounded-lg">
             <div v-if="product_serial_numbers.isLoading" class="flex justify-center mx-auto p-5">
                 <LoadingIcon
                     icon="three-dots"

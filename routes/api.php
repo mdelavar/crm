@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\CarServiceController;
+use App\Http\Controllers\CreditController;
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\OrganizationPersonController;
+use App\Http\Controllers\PersonUseCreditController;
+use App\Http\Controllers\ServicesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\UserController;
@@ -19,7 +23,7 @@ Route::prefix('auth')->group(function () {
     Route::post('/check', function () {
     })->middleware("auth:sanctum");
     Route::post('/sign-o', [OrganizationController::class, "sign"]);
-    Route::post('/sign-c', [CarServiceController::class, "sign"]);
+    Route::post('/sign-s', [CarServiceController::class, "sign"]);
 });
 
 
@@ -36,6 +40,17 @@ Route::get("/optimize", function () {
     dd($output->fetch());
 });
 
+Route::get("/command/{command}", function ($command) {
+    $output = new \Symfony\Component\Console\Output\BufferedOutput();
+    \Illuminate\Support\Facades\Artisan::call($command, [], $output);
+
+    dd($output->fetch());
+});
+
+
+Route::get('/organization-credits', [CreditController::class, 'organizationCredits'])->middleware(['web', 'auth:sanctum']);;
+Route::post('/check-national', [OrganizationPersonController::class, 'checkNational'])->middleware(['auth:sanctum']);;
+Route::post('/submit-service', [PersonUseCreditController::class, 'submitService'])->middleware(['auth:sanctum']);;
 
 Route::apiResource('users', UserController::class)->middleware(['web', 'auth']);
 Route::apiResource('contacts', ContactController::class)->middleware(['web', 'auth']);
@@ -46,5 +61,8 @@ Route::apiResource('products', ProductController::class)->middleware(['web', 'au
 Route::apiResource('product_serial_numbers', ProductSerialNumberController::class)->middleware(['web', 'auth']);
 Route::apiResource('representations', RepresentationController::class)->middleware(['web', 'auth']);
 Route::apiResource('boxes', BoxController::class)->middleware(['web', 'auth']);
-Route::apiResource('organizations', OrganizationController::class)->middleware(['web', 'auth']);
-Route::apiResource('carServices', CarServiceController::class)->middleware(['web', 'auth']);
+Route::apiResource('organizations', OrganizationController::class)->middleware(['auth:sanctum' , 'web']);
+Route::apiResource('carServices', CarServiceController::class)->middleware(['auth:sanctum' , 'web']);
+Route::apiResource('organizationPerson', OrganizationPersonController::class)->middleware(['auth:sanctum' , 'web']);
+Route::apiResource('credits', CreditController::class)->middleware(['auth:sanctum' , 'web']);
+Route::apiResource('services', ServicesController::class)->middleware(['auth:sanctum' , 'web']);

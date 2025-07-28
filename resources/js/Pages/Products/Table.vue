@@ -1,14 +1,14 @@
 <template>
     <div class="relative intro-y">
-        <div class="flex justify-between mb-3 items-center">
-            <span class="text-2xl">فهرست محصولات</span>
+       <div class="flex justify-between mb-3 items-center md:flex-row flex-col">
+            <span class="text-2xl mb-3 md:mb-0">فهرست محصولات</span>
             <PrimaryButton v-if="hasPermission('products_create')" @click="clearForm">
                 <vue-feather class="ml-2" size="20" type="plus"/>
                 افزودن محصول جدید
             </PrimaryButton>
         </div>
         <Filter @search-items="searchFilters" :categories="categories"></Filter>
-        <div class="overflow-hidden border border-themeOverlyPrimary md:rounded-lg">
+        <div class="overflow-y-auto border border-themeOverlyPrimary md:rounded-lg">
             <div v-if="products.isLoading" class="flex justify-center mx-auto p-5">
                 <LoadingIcon
                     icon="three-dots"

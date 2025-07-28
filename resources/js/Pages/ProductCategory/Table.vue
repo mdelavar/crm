@@ -1,14 +1,14 @@
 <template>
     <div class="relative intro-y">
-        <div class="flex justify-between mb-3 items-center">
-            <span class="text-2xl">فهرست دسته بندی محصولات</span>
+        <div class="flex justify-between mb-3 items-center md:flex-row flex-col">
+            <span class="text-2xl mb-3 md:mb-0">فهرست دسته بندی محصولات</span>
             <PrimaryButton v-if="hasPermission('p_category_create')" @click="clearForm">
                 <vue-feather class="ml-2" size="20" type="plus"/>
                 افزودن دسته بندی جدید
             </PrimaryButton>
         </div>
         <Filter @search-items="searchFilters"></Filter>
-        <div class="overflow-hidden border border-themeOverlyPrimary md:rounded-lg">
+        <div class="overflow-y-auto border border-themeOverlyPrimary md:rounded-lg">
             <div v-if="categories.isLoading" class="flex justify-center mx-auto p-5">
                 <LoadingIcon
                     icon="three-dots"

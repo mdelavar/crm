@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-
-class Organization extends Model
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+class Organization extends Authenticatable
 {
-    use HasFactory;
+    use HasApiTokens;
+
     protected $fillable = [
-      'name',
-      'phone',
-      'password'
+        'name',
+        'phone',
+        'password'
     ];
 }

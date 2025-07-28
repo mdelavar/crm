@@ -40,6 +40,15 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'organization' => [
+            'driver' => 'sanctum',
+            'provider' => 'organizations',
+        ],
+
+        'car_service' => [
+            'driver' => 'sanctum',
+            'provider' => 'carServices',
+        ],
     ],
 
     /*
@@ -63,6 +72,16 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+
+        'organizations' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Organization::class,
+        ],
+
+        'carServices' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\CarService::class,
         ],
 
         // 'users' => [

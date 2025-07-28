@@ -1,5 +1,5 @@
 <template>
-    <component :is="tag" ref="tippyRef">
+    <component :is="tag" class="flex items-center justify-center" ref="tippyRef">
         <slot></slot>
     </component>
 </template>
@@ -16,7 +16,7 @@ export default defineComponent({
         },
         tag: {
             type: String,
-            default: "span",
+            default: "div",
         },
         options: {
             type: Object,

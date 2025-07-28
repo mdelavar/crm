@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\PersonUseCredit;
 use App\Http\Requests\StorePersonUseCreditRequest;
 use App\Http\Requests\UpdatePersonUseCreditRequest;
+use Illuminate\Http\Request;
 
 class PersonUseCreditController extends Controller
 {
@@ -62,5 +63,27 @@ class PersonUseCreditController extends Controller
     public function destroy(PersonUseCredit $personUseCredit)
     {
         //
+    }
+
+    public function submitService(Request $request)
+    {
+        $data = request()->validate([
+           'person' => 'required|exists:organization_people,id',
+           'car_service' => 'required|exists:car_services,id',
+           'services' => 'required|array',
+           'services.*.id' => 'required|exists:services,id',
+           'services.*.amount' => 'required|integer|min:1',
+        ]);
+
+        foreach ($data['services'] as $service) {
+            PersonUseCredit::query()->create([
+                'organization_people_id' => $data['person'],
+                'car_service_id' => $data['car_service'],
+                'service_id' => $service['id'],
+                'amount' => $service['amount'],
+            ]);
+        }
+
+        return response()->json(['success' => true]);
     }
 }

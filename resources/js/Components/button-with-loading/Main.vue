@@ -1,7 +1,7 @@
 <template>
     <button
-        :disabled="loading"
-        class="text-sm inline-flex justify-center  items-center px-3 py-2 bg-themePrimary border border-transparent rounded-md text-white hover:bg-themeLightPrimary focus:bg-themeLightPrimary active:bg-themeLightPrimary focus:outline-none focus:ring-2 focus:ring-themePrimary focus:ring-offset-2 transition ease-in-out duration-150"
+        :disabled="disabled || loading"
+        class="text-sm inline-flex justify-center disabled:bg-gray-400 items-center px-3 py-2 bg-themeSecondary border border-transparent rounded-md text-white hover:bg-themeLightPrimary focus:bg-themeLightPrimary active:bg-themeLightPrimary focus:outline-none focus:ring-2 focus:ring-themePrimary focus:ring-offset-2 transition ease-in-out duration-150"
     >
         <LoadingIcon
             v-if="loading"
@@ -27,6 +27,10 @@ export default defineComponent({
             default: "button",
         },
         loading: {
+            type: Boolean,
+            default: false,
+        },
+        disabled: {
             type: Boolean,
             default: false,
         },

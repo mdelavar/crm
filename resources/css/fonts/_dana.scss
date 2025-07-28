@@ -1,10 +1,19 @@
 @font-face {
   font-family: dana;
-  src: url("/public/fonts/dana/dana-fanum-medium.eot"); /* IE9 Compat Modes */
-  src: url("/public/fonts/dana/dana-fanum-medium.eot")
+  src: url("/public/fonts/dana/dana-fanum-regular.eot"); /* IE9 Compat Modes */
+  src: url("/public/fonts/dana/dana-fanum-regular.eot")
       format("embedded-opentype"),
-      url("/public/fonts/dana/dana-fanum-medium.woff2")
+      url("/public/fonts/dana/dana-fanum-regular.woff2")
       format("woff2"),
-      url("/public/fonts/dana/dana-fanum-medium.woff")
+      url("/public/fonts/dana/dana-fanum-regular.woff")
       format("woff"); /* Pretty Modern Browsers */
+}
+
+@font-face {
+    font-family: dana;
+    src: url("/public/fonts/dana/dana-fanum-demibold.eot"); /* IE9 Compat Modes */
+    src: url("/public/fonts/dana/dana-fanum-demibold.eot") format("embedded-opentype"),
+    url("/public/fonts/dana/dana-fanum-demibold.woff2") format("woff2"),
+    url("/public/fonts/dana/dana-fanum-demibold.woff") format("woff"); /* Pretty Modern Browsers */
+    font-weight: bold;
 }

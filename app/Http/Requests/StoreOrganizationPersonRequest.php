@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\NationalCode;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrganizationPersonRequest extends FormRequest
@@ -11,7 +12,7 @@ class StoreOrganizationPersonRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,11 @@ class StoreOrganizationPersonRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'organization_id' => 'required|exists:organizations,id',
+            'name' => 'required|string',
+            'national_code' => ['required' , new NationalCode(), 'string' , 'unique:organization_people,national_code,' . $this->id],
+            'phone' => 'required|string|regex:/^09\d{9}$/',
+            'car_number' => 'required|string',
         ];
     }
 }

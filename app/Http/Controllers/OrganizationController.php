@@ -7,6 +7,8 @@ use App\Http\Requests\StoreOrganizationRequest;
 use App\Http\Resources\OrganizationCollection;
 use App\Http\Resources\OrganizationResource;
 use App\Models\Organization;
+use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Cache;
 
 class OrganizationController extends Controller
@@ -82,5 +84,16 @@ class OrganizationController extends Controller
     public function destroy(Organization $organization)
     {
         //
+    }
+
+    public function sign(Request $request)
+    {
+        $organization = Organization::query()->where('phone', $request->input('phone'))->where('password' , $request->input('password'))->first();
+        if ($organization) {
+            $token = $organization->createToken("api" , ['*'] , now()->add('hour' , 5));
+            return ['data' => $this->respondWithItem($organization) , 'token' => $token->plainTextToken , 'type' => 'organization'];
+        } else {
+            return response(["errors" => ["اطلاعات وارد شده صحیح نمی باشد!"]], 422);
+        }
     }
 }

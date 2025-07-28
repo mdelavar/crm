@@ -1,6 +1,6 @@
 <template>
     <Card class="p-4 mb-5">
-        <div class="ml-auto flex gap-2 items-center">
+        <div class="ml-auto flex gap-2 items-center flex-wrap max-sm:space-y-3">
             <input
                 v-model="filter.name"
                 placeholder="نام"

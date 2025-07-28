@@ -8,8 +8,12 @@ Route::get('/', function () {
 });
 
 Route::get('/o-panel', function () {
-    return Inertia::render('OrganizationPanel/Main');
+    return Inertia::render('OrganizationPanel/Index');
 })->name('organizationPanel');
+
+Route::get('/s-panel', function () {
+    return Inertia::render('CarServicePanel/Index');
+})->name('carServicePanel');
 
 Route::group(['prefix' => "dashboard", "middleware" => 'auth'], function () {
     Route::get('/', function () {
@@ -60,6 +64,11 @@ Route::group(['prefix' => "dashboard", "middleware" => 'auth'], function () {
     Route::get('/car_services', function () {
         return Inertia::render('CarService/Main');
     })->name('car_services');
+
+
+    Route::get('/services', function () {
+        return Inertia::render('Services/Main');
+    })->name('services');
 });
 
 Route::get('public_path' , function () {

@@ -1,13 +1,14 @@
 import axios from "axios";
 import {router} from "@inertiajs/vue3";
 import Toastify from "./toastify.js";
+import auth from "@/auth.js";
 
 
 let options = {
     baseURL: import.meta.env.VITE_APIURL || "/api",
     withCredentials: true,
     headers: {
-        // Authorization: token ? "Bearer " + token : "",
+        Authorization: auth.methods.getToken() ? "Bearer " + auth.methods.getToken() : "",
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
         "Content-Type": "application/json",
@@ -26,7 +27,9 @@ Axios.interceptors.response.use(
             let data = error.response.data;
             switch (error.response.status) {
                 case 401:
-                    router.push({name: "login"});
+                    console.log("ssss")
+                    // auth.methods.logout();
+                    // router.push({name: "login"});
                     break;
                 case 422:
                     if ("errors" in data) {

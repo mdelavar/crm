@@ -2,18 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\ServicesRepository;
+use App\Http\Resources\ServicesCollection;
+use App\Http\Resources\ServicesResource;
 use App\Models\Services;
 use App\Http\Requests\StoreServicesRequest;
-use App\Http\Requests\UpdateServicesRequest;
+use Illuminate\Support\Facades\Cache;
 
 class ServicesController extends Controller
 {
+
+    public function __construct(private ServicesRepository $servicesRepository)
+    {
+        $this->resourceItem = ServicesResource::class;
+        $this->resourceCollection = ServicesCollection::class;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $cacheTag = 'services';
+        $cacheKey = 'services:' . auth()->id() . json_encode(request()->all());
+
+        return Cache::tags($cacheTag)->remember($cacheKey, now()->addHour(), function () {
+            $collection = $this->servicesRepository->findByFilters();
+            return $this->respondWithCollection($collection);
+        });
     }
 
     /**
@@ -29,7 +45,9 @@ class ServicesController extends Controller
      */
     public function store(StoreServicesRequest $request)
     {
-        //
+        $data = $request->validated();
+        $response = $this->servicesRepository->store($data);
+        return $this->respondWithItem($response);
     }
 
     /**
@@ -51,9 +69,11 @@ class ServicesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateServicesRequest $request, Services $services)
+    public function update(StoreServicesRequest $request, Services $services)
     {
-        //
+        $data = $request->validated();
+        $response = $this->servicesRepository->update($services, $data);
+        return $this->respondWithItem($response);
     }
 
     /**

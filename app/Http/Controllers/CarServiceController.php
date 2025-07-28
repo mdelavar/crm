@@ -7,6 +7,7 @@ use App\Http\Requests\StoreCarServiceRequest;
 use App\Http\Resources\CarServiceCollection;
 use App\Http\Resources\CarServiceResource;
 use App\Models\CarService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 
 class CarServiceController extends Controller
@@ -82,5 +83,16 @@ class CarServiceController extends Controller
     public function destroy(CarService $carService)
     {
         //
+    }
+
+    public function sign(Request $request)
+    {
+        $carService = CarService::query()->where('phone', $request->input('phone'))->where('password' , $request->input('password'))->first();
+        if ($carService) {
+            $token = $carService->createToken("api" , ['*'] , now()->add('hour' , 5));
+            return ['data' => $this->respondWithItem($carService) , 'token' => $token->plainTextToken , 'type' => 'car_service'];
+        } else {
+            return response(["errors" => ["اطلاعات وارد شده صحیح نمی باشد!"]], 422);
+        }
     }
 }

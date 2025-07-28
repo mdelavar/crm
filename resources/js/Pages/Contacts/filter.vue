@@ -1,6 +1,6 @@
 <template>
     <Card class="p-4 mb-5">
-        <div class="flex items-center w-full">
+        <div class="flex items-center w-full flex-wrap max-sm:space-y-3">
             <input
                 v-model="filter.name"
                 placeholder="عنوان"

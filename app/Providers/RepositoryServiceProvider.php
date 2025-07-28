@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Contracts\BoxRepository;
 use App\Contracts\CarServiceRepository;
 use App\Contracts\ContactRepository;
+use App\Contracts\CreditRepository;
+use App\Contracts\OrganizationPeopleRepository;
 use App\Contracts\OrganizationRepository;
 use App\Contracts\ProductCategoryRepository;
 use App\Contracts\ProductRepository;
@@ -12,21 +14,27 @@ use App\Contracts\ProductSerialNumberRepository;
 use App\Contracts\RelationCategoryRepository;
 use App\Contracts\RelationRepository;
 use App\Contracts\RepresentationRepository;
+use App\Contracts\ServicesRepository;
 use App\Contracts\UserRepository;
 use App\Models\Box;
 use App\Models\CarService;
 use App\Models\Contact;
+use App\Models\Credit;
 use App\Models\Organization;
+use App\Models\OrganizationPerson;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductSerialNumber;
 use App\Models\Relation;
 use App\Models\RelationCategory;
 use App\Models\Representation;
+use App\Models\Services;
 use App\Models\User;
 use App\Repositories\EloquentBoxRepository;
 use App\Repositories\EloquentCarServiceRepository;
 use App\Repositories\EloquentContactRepository;
+use App\Repositories\EloquentCreditRepository;
+use App\Repositories\EloquentOrganizationPeopleRepository;
 use App\Repositories\EloquentOrganizationRepository;
 use App\Repositories\EloquentProductCategoryRepository;
 use App\Repositories\EloquentProductRepository;
@@ -34,6 +42,7 @@ use App\Repositories\EloquentProductSerialNumberRepository;
 use App\Repositories\EloquentRelationCategoryRepository;
 use App\Repositories\EloquentRelationRepository;
 use App\Repositories\EloquentRepresentationRepository;
+use App\Repositories\EloquentServicesRepository;
 use App\Repositories\EloquentUserRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -85,6 +94,15 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(CarServiceRepository::class, function () {
             return new EloquentCarServiceRepository(new CarService());
         });
+        $this->app->singleton(OrganizationPeopleRepository::class, function () {
+            return new EloquentOrganizationPeopleRepository(new OrganizationPerson());
+        });
+        $this->app->singleton(CreditRepository::class, function () {
+            return new EloquentCreditRepository(new Credit());
+        });
+        $this->app->singleton(ServicesRepository::class, function () {
+            return new EloquentServicesRepository(new Services());
+        });
 
     }
 
@@ -107,6 +125,9 @@ class RepositoryServiceProvider extends ServiceProvider
             BoxRepository ::class,
             OrganizationRepository ::class,
             CarServiceRepository ::class,
+            OrganizationPeopleRepository ::class,
+            CreditRepository ::class,
+            ServicesRepository ::class,
         ];
     }
 }

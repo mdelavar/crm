@@ -6,19 +6,25 @@ export default {
         isLoggedIn() {
             return this.getToken().length > 0;
         },
+        isLoggedInOrganization() {
+            return this.getToken().length > 0 && this.getData('type') === 'organization';
+        },
+        isLoggedInCarService() {
+            return this.getToken().length > 0 && this.getData('type') === 'car_service';
+        },
     },
     methods: {
         getToken() {
             return localStorage.getItem('token') ?? "";
         },
-        getName() {
-            return localStorage.getItem('name') ?? "";
-        },
-        getPhone() {
-            return localStorage.getItem('phone') ?? "";
-        },
         setToken($token) {
             localStorage.setItem('token', $token)
+        },
+        setData($data_name, $data) {
+            localStorage.setItem($data_name, $data)
+        },
+        getData($data_name) {
+            return localStorage.getItem($data_name)
         },
         logout() {
             localStorage.removeItem("token");

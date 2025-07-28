@@ -1,10 +1,10 @@
 import './bootstrap';
 import '../css/app.scss';
 
-import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/vue3';
-import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
-import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import {createApp, h} from 'vue';
+import {createInertiaApp} from '@inertiajs/vue3';
+import {resolvePageComponent} from 'laravel-vite-plugin/inertia-helpers';
+import {ZiggyVue} from '../../vendor/tightenco/ziggy';
 import permissionMixin from "@/mixins/permissionMixin.js";
 import Axios from "@/axios.js";
 import VueAxios from "vue-axios";
@@ -15,20 +15,22 @@ import TailSelect from './Components/tail-select/Main.vue';
 import VueFeather from 'vue-feather';
 import VuePersianDatetimePicker from "./Components/date-picker/VuePersianDatetimePicker.vue";
 import $ from "cash-dom";
-
+import auth from "@/auth.js";
+import InputNumber from '@/Components/InputNumber.vue'
 const appName = 'نرم افزار مدیریت ارتباط با مشتری';
 window.cash = $;
 
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
-    setup({ el, App, props, plugin }) {
+    setup({el, App, props, plugin}) {
 
         const application = createApp({render: () => h(App, props)})
             .use(plugin)
             .use(ZiggyVue, Ziggy);
 
         application.mixin(permissionMixin);
+        application.mixin(auth);
         application.use(VueAxios, Axios);
 
         application.component('ButtonWithLoading', ButtonWithLoading);
@@ -37,6 +39,7 @@ createInertiaApp({
         application.component(VueFeather.name, VueFeather);
         application.component("VuePersianDatetimePicker", VuePersianDatetimePicker);
         application.component("TailSelect", TailSelect);
+        application.component("InputNumber", InputNumber);
 
         application.mount(el);
         delete el.dataset.page

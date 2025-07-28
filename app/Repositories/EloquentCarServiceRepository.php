@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class EloquentCarServiceRepository extends EloquentRepository implements CarServiceRepository, OrganizationRepository
+class EloquentCarServiceRepository extends EloquentRepository implements CarServiceRepository
 {
     private string $defaultSort = 'id';
 
