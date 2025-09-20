@@ -6,6 +6,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\OrganizationPersonController;
 use App\Http\Controllers\PersonUseCreditController;
 use App\Http\Controllers\ServicesController;
+use App\Imports\OrganizationPersonImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\UserController;
@@ -18,6 +19,7 @@ use \App\Http\Controllers\ProductController;
 use \App\Http\Controllers\ProductSerialNumberController;
 use \App\Http\Controllers\RepresentationController;
 use \App\Http\Controllers\BoxController;
+use Maatwebsite\Excel\Facades\Excel;
 
 Route::prefix('auth')->group(function () {
     Route::post('/check', function () {
@@ -66,3 +68,9 @@ Route::apiResource('carServices', CarServiceController::class)->middleware(['aut
 Route::apiResource('organizationPerson', OrganizationPersonController::class)->middleware(['auth:sanctum' , 'web']);
 Route::apiResource('credits', CreditController::class)->middleware(['auth:sanctum' , 'web']);
 Route::apiResource('services', ServicesController::class)->middleware(['auth:sanctum' , 'web']);
+Route::apiResource('personUseCredit', PersonUseCreditController::class)->middleware(['auth:sanctum' , 'web']);
+
+
+Route::post('import-person/{id}', function (Request $request , $id) {
+    Excel::import(new OrganizationPersonImport($id), $request->file('excel'));
+});

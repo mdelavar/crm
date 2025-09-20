@@ -32,7 +32,7 @@
                     </th>
                     <th scope="col"
                         class="py-2 px-3 border border-themeOverlyPrimary text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
-                        میلغ
+                        مبلغ (ریال)
                     </th>
                     <th scope="col"
                         class="py-2 px-3 border border-themeOverlyPrimary text-sm font-normal text-right rtl:text-right text-themeLightPrimary">

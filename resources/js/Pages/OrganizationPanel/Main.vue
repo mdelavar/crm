@@ -52,11 +52,11 @@
 
               <div class="hidden md:block">
                 <div v-for="(item , i ) in pages"
-                     class="my-3 bg-indigo-100 text-sm px-3 py-2 items-center rounded cursor-pointer text-right flex"
+                     class="my-3 bg-gray-200 text-sm px-3 py-2 items-center rounded cursor-pointer text-right flex"
                      @click="currentPage=item.link"
-                     :class="{'!bg-indigo-400 text-white' : currentPage === item.link}">
+                     :class="{'!bg-themePrimary text-white' : currentPage === item.link}">
                 <span
-                    class="ml-2 rounded bg-white text-sm w-[1.5rem] border border-indigo-400 h-[1.5rem] flex justify-center items-center text-black">{{
+                    class="ml-2 rounded bg-white text-sm w-[1.5rem] border border-themePrimary h-[1.5rem] flex justify-center items-center text-black">{{
                     i + 1
                   }}</span>
                   {{ item.name }}

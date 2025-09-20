@@ -4,6 +4,13 @@
             <div class="font-bold text-lg">فهرست کارمندان ها</div>
             <div class="flex items-center mr-auto">
                 <PrimaryButton
+                    @click="$emit('excelPage')">
+                    <vue-feather class="ml-2" size="20" type="plus"/>
+                    افزودن با اکسل
+                </PrimaryButton>
+            </div>
+            <div class="flex items-center mr-3">
+                <PrimaryButton
                     @click="$emit('entryPage')">
                     <vue-feather class="ml-2" size="20" type="plus"/>
                     افزودن کارمند جدید
@@ -39,7 +46,6 @@
                         پلاک خودرو
                     </th>
 
-
                     <th scope="col"
                         class="px-4 py-2 border border-themeOverlyPrimary text-sm font-normal text-right rtl:text-right text-themeLightPrimary">
                         <span>عملیات</span>
@@ -56,6 +62,17 @@
                     <td class="border px-2 text-sm py-2">{{ item.car_number }}</td>
                     <td class="border px-2">
                         <div class="flex items-center justify-center">
+                            <div
+                                class="mx-1">
+                                <a
+                                    class="cursor-pointer"
+                                    @click="report(item)"
+                                >
+                                    <Tippy content="گزارش">
+                                        <vue-feather size="20" class="text-green-800" type="bar-chart"/>
+                                    </Tippy>
+                                </a>
+                            </div>
                             <div
                                 class="mx-1">
                                 <a
@@ -116,7 +133,7 @@ export default defineComponent({
         Pagination,
         LoadingIcon,
     },
-    emits: ['entryPage', 'editItem'],
+    emits: ['entryPage', 'editItem' , 'excelPage' , 'reportItem'],
     props: {
         event: {
             type: Object,
@@ -151,6 +168,9 @@ export default defineComponent({
         },
         updateForm(item) {
             this.$emit('editItem', item)
+        },
+        report(item) {
+            this.$emit('reportItem', item)
         },
         reload(page = 1, filter = this.filter, submit_new = false) {
             this.people.isLoading = true;

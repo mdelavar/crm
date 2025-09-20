@@ -8,6 +8,7 @@ use App\Contracts\ContactRepository;
 use App\Contracts\CreditRepository;
 use App\Contracts\OrganizationPeopleRepository;
 use App\Contracts\OrganizationRepository;
+use App\Contracts\PersonUseCreditRepository;
 use App\Contracts\ProductCategoryRepository;
 use App\Contracts\ProductRepository;
 use App\Contracts\ProductSerialNumberRepository;
@@ -22,6 +23,7 @@ use App\Models\Contact;
 use App\Models\Credit;
 use App\Models\Organization;
 use App\Models\OrganizationPerson;
+use App\Models\PersonUseCredit;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductSerialNumber;
@@ -36,6 +38,7 @@ use App\Repositories\EloquentContactRepository;
 use App\Repositories\EloquentCreditRepository;
 use App\Repositories\EloquentOrganizationPeopleRepository;
 use App\Repositories\EloquentOrganizationRepository;
+use App\Repositories\EloquentPersonUseCreditRepository;
 use App\Repositories\EloquentProductCategoryRepository;
 use App\Repositories\EloquentProductRepository;
 use App\Repositories\EloquentProductSerialNumberRepository;
@@ -102,6 +105,9 @@ class RepositoryServiceProvider extends ServiceProvider
         });
         $this->app->singleton(ServicesRepository::class, function () {
             return new EloquentServicesRepository(new Services());
+        });
+        $this->app->singleton(PersonUseCreditRepository::class, function () {
+            return new EloquentPersonUseCreditRepository(new PersonUseCredit());
         });
 
     }

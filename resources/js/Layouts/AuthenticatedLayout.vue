@@ -12,12 +12,12 @@
         <div class="min-h-screen bg-gray-100 pb-6">
 
             <div
-                class="border-b border-gray-100 bg-indigo-700"
+                class="border-b border-gray-100 bg-themePrimary"
             >
                 <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div class="flex h-16 justify-between">
                         <div class="flex">
-                            <div class="font-bold text-lg text-white flex items-center justify-center">
+                            <div class="font-bold text-lg text-themeSecondary flex items-center justify-center">
                                 <slot name="header"/>
                             </div>
                         </div>
@@ -35,7 +35,7 @@
 
             <!-- Page Content -->
             <div class="relative">
-                <div class="h-[10rem] absolute w-full bg-indigo-200 top-[-1px] z-0 c-pattern"></div>
+                <div class="h-[10rem] absolute w-full bg-themeOverlyPrimary top-[-1px] z-0 c-pattern"></div>
                 <div class="relative z-50">
                     <slot/>
                 </div>

@@ -1,0 +1,30 @@
+<script setup>
+import {Head} from '@inertiajs/vue3';
+</script>
+
+<template>
+    <Head title="دریافت خدمات"/>
+    <DashboardLayout route-name="personUseCredit">
+        <Card>
+            <Table
+                class="intro-y inbox box mt-5 p-5"
+            />
+        </Card>
+    </DashboardLayout>
+</template>
+<script>
+import {defineComponent} from "vue";
+
+import DashboardLayout from "@/Layouts/DashboardLayout.vue";
+import Card from "@/Components/Card.vue";
+import Table from "./Table.vue";
+
+
+export default defineComponent({
+    components: {
+        Table,
+        Card,
+        DashboardLayout
+    },
+});
+</script>

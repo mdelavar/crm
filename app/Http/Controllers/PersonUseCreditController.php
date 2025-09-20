@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\PersonUseCreditRepository;
+use App\Http\Resources\PersonUseCreditCollection;
+use App\Http\Resources\PersonUseCreditResource;
 use App\Models\PersonUseCredit;
 use App\Http\Requests\StorePersonUseCreditRequest;
 use App\Http\Requests\UpdatePersonUseCreditRequest;
@@ -9,12 +12,20 @@ use Illuminate\Http\Request;
 
 class PersonUseCreditController extends Controller
 {
+
+    public function __construct(private PersonUseCreditRepository $personUseCreditRepository)
+    {
+        $this->resourceItem = PersonUseCreditResource::class;
+        $this->resourceCollection = PersonUseCreditCollection::class;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $collection = $this->personUseCreditRepository->findByFilters();
+        return $this->respondWithCollection($collection);
     }
 
     /**

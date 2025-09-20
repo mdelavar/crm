@@ -11,12 +11,13 @@
                        placeholder="شماره همراه"
                        class="shadow max-w-[20rem] mb-4 appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                        type="text"
+                       autocomplete="new-password"
                        @keydown.enter="login()">
 
                 <input v-model="form.password"
                        placeholder="رمز عبور"
                        class="shadow max-w-[20rem] mb-4 appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                       type="text"
+                       type="password"
                        @keydown.enter="login()">
 
                 <ButtonWithLoading :loading="loginLoading" @click="login()" class="w-full max-w-[20rem] mt-4"

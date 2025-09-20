@@ -5,7 +5,7 @@
         @input="onInput"
         @keydown="preventInvalidKeys"
         :placeholder="placeholder"
-        class="shadow appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        class="shadow mt-2 appearance-none border rounded-md w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
     />
 </template>
 

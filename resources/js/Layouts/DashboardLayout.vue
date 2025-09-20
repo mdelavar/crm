@@ -81,12 +81,16 @@ const props = defineProps({
                              icon="target">
                         سازمان ها
                     </NavLink>
+                    <NavLink v-if="hasPermission('organization_view')" :href="route('personUseCredit')"
+                             :active="routeName === 'personUseCredit'"
+                             icon="tool">
+                        دریافت خدمات
+                    </NavLink>
                     <NavLink v-if="hasPermission('car_service_view')" :href="route('car_services')"
                              :active="routeName === 'car_services'"
                              icon="tool">
                         اتوسرویس ها
                     </NavLink>
-
                     <NavLink v-if="hasPermission('services_view')" :href="route('services')"
                              :active="routeName === 'services'"
                              icon="pocket">

@@ -65,10 +65,13 @@ Route::group(['prefix' => "dashboard", "middleware" => 'auth'], function () {
         return Inertia::render('CarService/Main');
     })->name('car_services');
 
-
     Route::get('/services', function () {
         return Inertia::render('Services/Main');
     })->name('services');
+
+    Route::get('/person_use_credit', function () {
+        return Inertia::render('PersonUseServices/Main');
+    })->name('personUseCredit');
 });
 
 Route::get('public_path' , function () {

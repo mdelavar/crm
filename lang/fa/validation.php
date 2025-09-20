@@ -152,8 +152,8 @@ return [
 
     'attributes' => [
         'name' => 'نام',
-        "ma_date" => 'تاریخ تولید',
-        "ex_date" => 'تاریخ انقضاء',
+        "start_date" => 'تاریخ شروع',
+        "end_date" => 'تاریخ پایان',
         'family' => 'نام خانوادگی',
         'serial' => 'سریال',
         'product_id' => 'شناسه محصول',

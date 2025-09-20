@@ -8,6 +8,8 @@ use App\Http\Requests\UpdatePersonServiceRequest;
 
 class PersonServiceController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
      */

@@ -35,8 +35,7 @@
             </div>
             <div class="md:col-span-4 col-span-1">
                 <label>
-                    مبلغ
-
+                    مبلغ (ریال)
                     <InputNumber v-model="form.amount"/>
                 </label>
             </div>
